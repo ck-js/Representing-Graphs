@@ -24,7 +24,7 @@ let adjacencyMatrix = []
 for (let i = 0; i < vertices.length; i++) {
     adjacencyMatrix.push(new Array(vertices.length).fill(0));
 }
-console.log(adjacencyMatrix);
+// console.log(adjacencyMatrix);
 // fill adjacency matrix with edge list connections
 edgeList.forEach(edge => {
     const [u,v] = edge;
@@ -32,3 +32,16 @@ edgeList.forEach(edge => {
     adjacencyMatrix[u -1][v -1] = 1
 })
 console.log(adjacencyMatrix);
+
+
+// create an adjacency list
+let adjacencyList = {};
+edgeList.forEach(edge => {
+const [u,v] = edge;
+if (!adjacencyList[u]) {
+    adjacencyList[u] = [];
+}
+adjacencyList[u].push(v);
+})
+
+console.log(adjacencyList[3]);

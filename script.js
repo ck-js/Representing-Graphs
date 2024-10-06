@@ -55,18 +55,15 @@ const chessBoardSize = 8;
 for (let i = 0; i < chessBoardSize; i++) {
     chessBoard.push(new Array(chessBoardSize).fill(0));
 }
-
-// function to get all possible moves for a knight
-const knightMoves = (start) => {
-    const [u,v] = start;
-chessBoard[u][v] = 1;
-const moves = getMoves(start);
-
-moves.forEach(move => {
-    const [u,v] = move;
-    chessBoard[u][v] = 1;
+const filterMoves = (movesList) => {
+    const filteredMoves = [];
+movesList.forEach(move => {
+const [u,v] = move;
+if (u >= 0 && u < chessBoardSize && v >= 0 && v < chessBoardSize) {
+    filteredMoves.push(move);
+}
 })
-
+return filteredMoves;
 }
 // helper function to calculate all possible moves for a knight
 const getMoves = (start) => {
@@ -74,14 +71,35 @@ const getMoves = (start) => {
     const moves = [];
 moves.push([u-2,v-1])    
 moves.push([u-2,v+1])    
+moves.push([u+2,v-1])    
+moves.push([u+2,v+1])    
 
-return moves;
+moves.push([u-1,v-2])
+moves.push([u-1,v+2])
+moves.push([u+1,v-2])
+moves.push([u+1,v+2])
+
+const filteredMoves = filterMoves(moves);
+
+return filteredMoves;
 }
-knightMoves([3,3])
+
+// function to get all possible moves for a knight
+const knightMoves = (start) => {
+    const [u,v] = start;
+chessBoard[u][v] = 1;
+const movesList = getMoves(start);
+console.log(movesList);
+
+movesList.forEach(move => {
+    const [u,v] = move;
+    chessBoard[u][v] = 1;
+})
+
+}
+
+knightMoves([2,4]);
 
 
 
-console.log(chessBoard[1][3]);
-
-
-
+console.log(chessBoard);

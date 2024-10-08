@@ -79,16 +79,39 @@ moves.push([u-1,v+2])
 moves.push([u+1,v-2])
 moves.push([u+1,v+2])
 
-const filteredMoves = filterMoves(moves);
+return moves
+}
+// function to get all possible moves using bfs
+const getAllMoves = (start) => {
+    const queue = [start];
+    const visited = new Set();
+    visited.add(start.toString());
+    
+    while (queue.length > 0) {
+const current = queue.shift();
 
-return filteredMoves;
+const possibleMoves = getMoves(current);
+const filteredMoves = filterMoves(possibleMoves);
+filteredMoves.forEach(move => {
+    const moveStr = move.toString();
+
+if (!visited.has(moveStr)) {
+    visited.add(moveStr)
+    queue.push(move);
+}
+})
+
+    }
+
+    return visited
 }
 
+
 // function to get all possible moves for a knight
-const knightMoves = (start) => {
+const knightMoves = (start, end) => {
     const [u,v] = start;
 chessBoard[u][v] = 1;
-const movesList = getMoves(start);
+const movesList = getAllMoves(start);
 console.log(movesList);
 
 movesList.forEach(move => {
@@ -98,7 +121,7 @@ movesList.forEach(move => {
 
 }
 
-knightMoves([2,4]);
+knightMoves([3,3], [4,3]);
 
 
 

@@ -1,3 +1,5 @@
+
+
 // // directed graph represented as an edge list
 // const edgeList = [
 //  [1,3],
@@ -103,7 +105,10 @@ if (!visited.has(moveStr)) {
 
     }
 
-    return visited
+const allMoves = Array.from(visited).map(move => move.split(',').map(Number));
+
+// console.log(allMoves);
+return allMoves
 }
 
 
@@ -111,8 +116,8 @@ if (!visited.has(moveStr)) {
 const knightMoves = (start, end) => {
     const [u,v] = start;
 chessBoard[u][v] = 1;
-const movesList = getAllMoves(start);
-console.log(movesList);
+const movesList = Array.from(getAllMoves(start));
+
 
 movesList.forEach(move => {
     const [u,v] = move;

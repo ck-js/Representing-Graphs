@@ -84,13 +84,19 @@ moves.push([u+1,v+2])
 return moves
 }
 // function to get all possible moves using bfs
-const getAllMoves = (start) => {
-    const queue = [start];
+const getAllMoves = (start, end) => {
+    const queue = [start,[start]];
     const visited = new Set();
     visited.add(start.toString());
-    
+
     while (queue.length > 0) {
 const current = queue.shift();
+const path = queue.shift();
+
+
+if (current.toString() === end.toString()) {
+    return path;
+    }
 
 const possibleMoves = getMoves(current);
 const filteredMoves = filterMoves(possibleMoves);
@@ -99,35 +105,42 @@ filteredMoves.forEach(move => {
 
 if (!visited.has(moveStr)) {
     visited.add(moveStr)
-    queue.push(move);
+    queue.push(move, [...path, move]);
+    
 }
 })
 
     }
 
-const allMoves = Array.from(visited).map(move => move.split(',').map(Number));
-
-// console.log(allMoves);
-return allMoves
+// const allMoves = Array.from(visited).map(move => move.split(',').map(Number));
+return null
 }
 
 
 // function to get all possible moves for a knight
 const knightMoves = (start, end) => {
     const [u,v] = start;
+    const [x,y] = end;
+
+    // console.log(end);
 chessBoard[u][v] = 1;
-const movesList = Array.from(getAllMoves(start));
+chessBoard[x][y] = 1;
 
+const shortestMovesList = Array.from(getAllMoves(start, end));
+// console.log(shortestMovesList);
 
-movesList.forEach(move => {
+shortestMovesList.forEach(move => {
     const [u,v] = move;
     chessBoard[u][v] = 1;
 })
 
+const pathLength = shortestMovesList.length - 1;
+// console.log(`You made it in ${pathLength} moves! Heres your path 
+//     ${shortestMovesList}`);
+    return `You made it in ${pathLength} moves! Heres your path ${shortestMovesList}`;
+
+
 }
 
-knightMoves([3,3], [4,3]);
-
-
-
+console.log(knightMoves([3,3],[4,3]));
 console.log(chessBoard);
